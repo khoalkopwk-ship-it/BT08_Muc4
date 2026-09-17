@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{thymeleaf/layouts/admin}">
+<head>
+    <title>Quản lý danh mục</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="admin-title">
+        <div>
+            <h1>Quản lý danh mục</h1>
+            <p>Tìm kiếm, thêm, sửa, xóa và cập nhật icon.</p>
+        </div>
+
+        <a class="btn-eco" th:href="@{/admin/categories/new}">
+            + Thêm danh mục
+        </a>
+    </div>
+
+    <div class="alert-eco alert-eco--success"
+         th:if="${success != null}"
+         th:text="${success}"></div>
+
+    <div class="alert-eco alert-eco--error"
+         th:if="${error != null}"
+         th:text="${error}"></div>
+
+    <div class="panel">
+        <form class="admin-search"
+              th:action="@{/admin/categories}"
+              method="get">
+            <input class="form-control-eco"
+                   type="search"
+                   name="keyword"
+                   th:value="${keyword}"
+                   placeholder="Tìm tên danh mục...">
+
+            <button class="btn-eco" type="submit">Tìm kiếm</button>
+
+            <a class="btn-eco btn-eco--light"
+               th:href="@{/admin/categories}">
+                Làm mới
+            </a>
+        </form>
+
+        <table class="eco-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Icon</th>
+                <th>Tên danh mục</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="category : ${result.content}">
+                <td th:text="${category.categoryId}">1</td>
+
+                <td>
+                    <img class="table-image"
+                         th:if="${category.icon != null
+                                and !#strings.isEmpty(category.icon)}"
+                         th:src="@{${'/' + category.icon}}"
+                         th:alt="${category.categoryName}">
+
+                    <span th:unless="${category.icon != null
+                                      and !#strings.isEmpty(category.icon)}">
+                        Chưa có
+                    </span>
+                </td>
+
+                <td>
+                    <strong th:text="${category.categoryName}">
+                        Tên danh mục
+                    </strong>
+                </td>
+
+                <td>
+                    <span class="status"
+                          th:classappend="${category.status == 1}
+                                  ? 'status--active'
+                                  : 'status--inactive'"
+                          th:text="${category.status == 1}
+                                  ? 'Hoạt động'
+                                  : 'Tạm ẩn'">
+                        Hoạt động
+                    </span>
+                </td>
+
+                <td>
+                    <div class="actions">
+                        <a class="btn-eco btn-eco--light btn-eco--small"
+                           th:href="@{/admin/categories/{id}/edit(
+                                    id=${category.categoryId})}">
+                            Sửa
+                        </a>
+
+                        <form class="inline-form"
+                              th:action="@{/admin/categories/{id}/delete(
+                                       id=${category.categoryId})}"
+                              method="post"
+                              onsubmit="return confirm('Xóa danh mục này?')">
+                            <button class="btn-eco btn-eco--danger btn-eco--small"
+                                    type="submit">
+                                Xóa
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+
+            <tr th:if="${result.totalElements == 0}">
+                <td colspan="5" class="empty-row">
+                    Không có danh mục phù hợp.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <nav class="pagination-eco"
+             th:if="${result.totalPages > 1}"
+             aria-label="Phân trang danh mục">
+
+            <a th:if="${result.hasPrevious()}"
+               th:href="@{/admin/categories(
+                        keyword=${keyword}, page=${result.number - 1})}">
+                «
+            </a>
+
+            <a th:each="pageNumber :
+                    ${#numbers.sequence(0, result.totalPages - 1)}"
+               th:href="@{/admin/categories(
+                        keyword=${keyword}, page=${pageNumber})}"
+               th:text="${pageNumber + 1}"
+               th:classappend="${pageNumber == result.number}
+                        ? 'active' : ''">
+                1
+            </a>
+
+            <a th:if="${result.hasNext()}"
+               th:href="@{/admin/categories(
+                        keyword=${keyword}, page=${result.number + 1})}">
+                »
+            </a>
+        </nav>
+
+        <p class="paging-summary"
+           th:if="${result.totalElements > 0}"
+           th:text="|Trang ${result.number + 1}/${result.totalPages}
+                    - Tổng ${result.totalElements} danh mục|">
+            Thông tin phân trang
+        </p>
+    </div>
+</section>
+</body>
+</html>

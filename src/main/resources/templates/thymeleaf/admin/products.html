@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{thymeleaf/layouts/admin}">
+
+<head>
+    <title>Quản lý sản phẩm</title>
+</head>
+
+<body>
+
+<main layout:fragment="content">
+
+    <section id="productApp"
+             class="product-page"
+             th:data-product-api="@{/api/products}"
+             th:data-category-api="@{/api/categories/options}"
+             th:data-login-url="@{/login}">
+
+        <div class="category-heading">
+            <div>
+                <h1>Quản lý sản phẩm</h1>
+                <p>
+                    Tìm kiếm, thêm, sửa, xóa và cập nhật ảnh
+                    sản phẩm bằng AJAX.
+                </p>
+            </div>
+
+            <button type="button"
+                    id="btnOpenCreateProduct"
+                    class="btn btn-primary">
+                + Thêm sản phẩm
+            </button>
+        </div>
+
+        <!-- Thông báo -->
+        <div id="productMessage"
+             class="ajax-message"
+             hidden>
+        </div>
+
+        <div class="category-card">
+
+            <!-- Tìm kiếm -->
+            <form id="productSearchForm"
+                  class="category-search-form">
+
+                <input type="search"
+                       id="productKeyword"
+                       placeholder="Tìm tên sản phẩm..."
+                       autocomplete="off">
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    Tìm kiếm
+                </button>
+
+                <button type="button"
+                        id="btnResetProductSearch"
+                        class="btn btn-secondary">
+                    Làm mới
+                </button>
+
+                <label for="productPageSize">
+                    Số dòng:
+                </label>
+
+                <select id="productPageSize">
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                </select>
+            </form>
+
+            <!-- Loading -->
+            <div id="productLoading"
+                 class="ajax-loading"
+                 hidden>
+                Đang tải dữ liệu sản phẩm...
+            </div>
+
+            <!-- Bảng Product -->
+            <div class="category-table-wrapper">
+                <table class="category-table product-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ảnh</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Danh mục</th>
+                        <th>Giá</th>
+                        <th>Ngày tạo</th>
+                        <th>Thao tác</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="productTableBody">
+                    <!-- JavaScript render dữ liệu tại đây -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="productEmpty"
+                 class="empty-message"
+                 hidden>
+                Không tìm thấy sản phẩm phù hợp.
+            </div>
+
+            <!-- Phân trang -->
+            <div class="category-pagination-area">
+                <span id="productPageInfo"></span>
+
+                <div id="productPagination"
+                     class="category-pagination">
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal thêm/sửa Product -->
+        <dialog id="productDialog"
+                class="category-dialog product-dialog">
+
+            <form id="productForm"
+                  enctype="multipart/form-data"
+                  novalidate>
+
+                <div class="dialog-header">
+                    <h2 id="productDialogTitle">
+                        Thêm sản phẩm
+                    </h2>
+
+                    <button type="button"
+                            class="dialog-close"
+                            data-close-product-dialog
+                            aria-label="Đóng">
+                        &times;
+                    </button>
+                </div>
+
+                <div id="productFormError"
+                     class="form-error"
+                     hidden>
+                </div>
+
+                <input type="hidden"
+                       id="productId"
+                       name="productId">
+
+                <div class="product-form-grid">
+
+                    <div class="form-group product-full-column">
+                        <label for="productName">
+                            Tên sản phẩm
+                            <span class="required">*</span>
+                        </label>
+
+                        <input type="text"
+                               id="productName"
+                               name="productName"
+                               maxlength="255"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productPrice">
+                            Giá
+                            <span class="required">*</span>
+                        </label>
+
+                        <input type="number"
+                               id="productPrice"
+                               name="price"
+                               min="0"
+                               step="0.01"
+                               placeholder="Ví dụ: 350000"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productCategory">
+                            Danh mục
+                            <span class="required">*</span>
+                        </label>
+
+                        <select id="productCategory"
+                                name="categoryId"
+                                required>
+                            <option value="">
+                                -- Chọn danh mục --
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group product-full-column">
+                        <label for="productDescription">
+                            Mô tả
+                        </label>
+
+                        <textarea id="productDescription"
+                                  name="description"
+                                  rows="4"
+                                  maxlength="2000"
+                                  placeholder="Nhập mô tả sản phẩm"></textarea>
+                    </div>
+
+                    <div class="form-group product-full-column">
+                        <label for="productImageFile">
+                            Ảnh sản phẩm
+                        </label>
+
+                        <input type="file"
+                               id="productImageFile"
+                               name="imageFile"
+                               accept="image/png,image/jpeg,image/gif,image/webp">
+
+                        <small>
+                            Khi cập nhật, để trống nếu muốn giữ ảnh cũ.
+                        </small>
+                    </div>
+
+                </div>
+
+                <div class="image-preview-wrapper">
+                    <img id="productImagePreview"
+                         class="product-image-preview"
+                         alt="Xem trước ảnh sản phẩm"
+                         hidden>
+                </div>
+
+                <div class="dialog-actions">
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-close-product-dialog>
+                        Hủy
+                    </button>
+
+                    <button type="submit"
+                            id="btnSaveProduct"
+                            class="btn btn-primary">
+                        Lưu sản phẩm
+                    </button>
+                </div>
+            </form>
+        </dialog>
+
+    </section>
+
+    <script th:src="@{/js/admin/product-ajax.js}"></script>
+
+</main>
+
+</body>
+</html>

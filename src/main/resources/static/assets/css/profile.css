@@ -1,0 +1,110 @@
+@import url('ecomart.css');
+
+.eco-main {
+    min-height: calc(100vh - 150px);
+}
+
+.profile-page {
+    padding: 55px 0 75px;
+    background: linear-gradient(135deg, #fff8e1, #f4f8ee);
+}
+
+.profile-heading {
+    margin-bottom: 25px;
+}
+
+.profile-heading h1 {
+    margin: 12px 0 8px;
+    color: var(--eco-brown);
+    font-size: 36px;
+}
+
+.profile-heading p {
+    margin: 0;
+    color: var(--eco-muted);
+}
+
+.profile-card {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 35px;
+    padding: 35px;
+    border: 1px solid var(--eco-border);
+    border-radius: 20px;
+    background: white;
+    box-shadow: var(--eco-shadow);
+}
+
+.profile-avatar {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 25px;
+    border-radius: 16px;
+    background: var(--eco-green-soft);
+    text-align: center;
+}
+
+.profile-avatar img {
+    width: 160px;
+    height: 160px;
+    margin-bottom: 18px;
+    border: 5px solid white;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, .12);
+}
+
+.profile-avatar strong {
+    color: var(--eco-brown);
+    font-size: 20px;
+}
+
+.profile-avatar span {
+    margin-top: 6px;
+    color: var(--eco-muted);
+}
+
+.profile-form {
+    display: grid;
+    gap: 18px;
+}
+
+.form-group {
+    display: grid;
+    gap: 7px;
+}
+
+.form-group label {
+    color: var(--eco-brown);
+    font-weight: 700;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--eco-border);
+    border-radius: 10px;
+    font: inherit;
+}
+
+.form-group input:focus {
+    border-color: var(--eco-green);
+    outline: 3px solid rgba(46, 125, 50, .12);
+}
+
+.form-group input[readonly] {
+    background: #f4f4ef;
+    color: var(--eco-muted);
+}
+
+.form-group small {
+    color: var(--eco-muted);
+}
+
+@media (max-width: 760px) {
+    .profile-card {
+        grid-template-columns: 1fr;
+        padding: 22px;
+    }
+}

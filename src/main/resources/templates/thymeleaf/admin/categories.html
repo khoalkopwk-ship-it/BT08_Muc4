@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{thymeleaf/layouts/admin}">
+
+<head>
+    <title>Quản lý danh mục</title>
+</head>
+
+<body>
+
+<main layout:fragment="content">
+
+    <!-- URL API có chứa context path nếu project được deploy dưới context khác -->
+    <section id="categoryApp"
+             class="category-page"
+             th:data-api-url="@{/api/categories}"
+             th:data-login-url="@{/login}">
+
+        <div class="category-heading">
+            <div>
+                <h1>Quản lý danh mục</h1>
+                <p>Tìm kiếm, thêm, sửa, xóa và cập nhật icon bằng AJAX.</p>
+            </div>
+
+            <button type="button"
+                    id="btnOpenCreate"
+                    class="btn btn-primary">
+                + Thêm danh mục
+            </button>
+        </div>
+
+        <!-- Thông báo -->
+        <div id="categoryMessage"
+             class="ajax-message"
+             hidden>
+        </div>
+
+        <!-- Tìm kiếm -->
+        <div class="category-card">
+            <form id="searchForm" class="category-search-form">
+                <input type="search"
+                       id="keyword"
+                       name="keyword"
+                       placeholder="Tìm tên danh mục..."
+                       autocomplete="off">
+
+                <button type="submit" class="btn btn-primary">
+                    Tìm kiếm
+                </button>
+
+                <button type="button"
+                        id="btnResetSearch"
+                        class="btn btn-secondary">
+                    Làm mới
+                </button>
+
+                <label for="pageSize">Số dòng:</label>
+
+                <select id="pageSize">
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                </select>
+            </form>
+
+            <!-- Trạng thái tải -->
+            <div id="categoryLoading" class="ajax-loading" hidden>
+                Đang tải dữ liệu...
+            </div>
+
+            <!-- Bảng dữ liệu -->
+            <div class="category-table-wrapper">
+                <table class="category-table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Icon</th>
+                        <th>Tên danh mục</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="categoryTableBody">
+                    <!-- JavaScript sẽ render dữ liệu tại đây -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="categoryEmpty"
+                 class="empty-message"
+                 hidden>
+                Không tìm thấy danh mục phù hợp.
+            </div>
+
+            <!-- Phân trang -->
+            <div class="category-pagination-area">
+                <span id="categoryPageInfo"></span>
+
+                <div id="categoryPagination"
+                     class="category-pagination">
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal thêm/sửa -->
+        <dialog id="categoryDialog" class="category-dialog">
+            <form id="categoryForm"
+                  enctype="multipart/form-data"
+                  novalidate>
+
+                <div class="dialog-header">
+                    <h2 id="categoryDialogTitle">Thêm danh mục</h2>
+
+                    <button type="button"
+                            class="dialog-close"
+                            data-close-dialog
+                            aria-label="Đóng">
+                        &times;
+                    </button>
+                </div>
+
+                <div id="categoryFormError"
+                     class="form-error"
+                     hidden>
+                </div>
+
+                <input type="hidden"
+                       id="categoryId"
+                       name="categoryId">
+
+                <div class="form-group">
+                    <label for="categoryName">
+                        Tên danh mục
+                        <span class="required">*</span>
+                    </label>
+
+                    <input type="text"
+                           id="categoryName"
+                           name="categoryName"
+                           maxlength="100"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">
+                        Trạng thái
+                    </label>
+
+                    <select id="status" name="status" required>
+                        <option value="1">Hoạt động</option>
+                        <option value="0">Ngừng hoạt động</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="iconFile">Ảnh danh mục</label>
+
+                    <input type="file"
+                           id="iconFile"
+                           name="iconFile"
+                           accept="image/png,image/jpeg,image/gif,image/webp">
+
+                    <small>
+                        Khi cập nhật, để trống nếu muốn giữ ảnh hiện tại.
+                    </small>
+                </div>
+
+                <div class="image-preview-wrapper">
+                    <img id="categoryImagePreview"
+                         class="category-image-preview"
+                         alt="Xem trước ảnh"
+                         hidden>
+                </div>
+
+                <div class="dialog-actions">
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-close-dialog>
+                        Hủy
+                    </button>
+
+                    <button type="submit"
+                            id="btnSaveCategory"
+                            class="btn btn-primary">
+                        Lưu danh mục
+                    </button>
+                </div>
+            </form>
+        </dialog>
+
+    </section>
+
+    <script th:src="@{/js/admin/category-ajax.js}"></script>
+
+</main>
+
+</body>
+</html>

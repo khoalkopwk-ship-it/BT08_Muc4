@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <!-- CSRF Token -->
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title layout:title-pattern="$CONTENT_TITLE | $LAYOUT_TITLE">
+        EcoMart Admin
+    </title>
+
+    <link rel="stylesheet" th:href="@{/assets/css/admin.css}">
+</head>
+
+<body class="admin-layout">
+    <div th:replace="~{thymeleaf/fragments/admin-sidebar
+            :: sidebar(${activeMenu})}"></div>
+
+    <div class="admin-main">
+        <div th:replace="~{thymeleaf/fragments/admin-header
+                :: header}"></div>
+
+        <main class="admin-content" layout:fragment="content">
+            <p>Nội dung mặc định</p>
+        </main>
+
+        <div th:replace="~{thymeleaf/fragments/admin-footer
+                :: footer}"></div>
+    </div>
+</body>
+</html>

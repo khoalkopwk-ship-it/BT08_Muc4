@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+// Fragment sidebar của trang quản trị
+// Sử dụng Thymeleaf để hiển thị menu điều hướng cho trang quản trị
+// Các liên kết trong menu điều hướng được đánh dấu là "active" dựa trên tham số activeMenu truyền vào
+// sec đã được khai báo để có thể mở rộng điều kiện phân quyền sau này. Với cấu hình hiện tại, toàn bộ /admin/** đã bị giới hạn cho vai trò ADMIN trong SecurityConfig.
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<aside class="admin-sidebar" th:fragment="sidebar(activeMenu)">
+    <a class="brand" th:href="@{/home}">
+        <img th:src="@{/assets/img/eco.png}" alt="EcoMart">
+        <span>EcoMart Admin</span>
+    </a>
+
+    <div class="admin-sidebar__label">Quản lý cửa hàng</div>
+
+    <nav>
+        <a th:href="@{/home}">⌂ Trang chủ</a>
+
+        <a th:href="@{/admin/categories}"
+           th:classappend="${activeMenu == 'category'} ? 'active' : ''">
+            ▦ Danh mục
+        </a>
+
+        <a th:href="@{/admin/products}"
+           th:classappend="${activeMenu == 'product'} ? 'active' : ''">
+            ▣ Sản phẩm
+        </a>
+
+        <a th:href="@{/admin/users}"
+           th:classappend="${activeMenu == 'user'} ? 'active' : ''">
+            ♙ Người dùng
+        </a>
+    </nav>
+
+    <div class="admin-sidebar__label">Tài khoản</div>
+
+    <nav>
+        <form class="inline-form" th:action="@{/logout}" method="post">
+            <button type="submit">↪ Đăng xuất</button>
+        </form>
+    </nav>
+</aside>
+</body>
+</html>

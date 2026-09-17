@@ -1,0 +1,22 @@
+@import url('ecomart.css');
+.auth-page { min-height: 100vh; display: grid; grid-template-columns: 1.05fr .95fr; background: var(--eco-cream); }
+.auth-visual { position: relative; display: flex; align-items: flex-end; padding: 55px; color: white; background: linear-gradient(0deg, rgba(24,69,31,.87), rgba(24,69,31,.2)), url('../img/banner-2.jpg') center/cover; }
+.auth-visual h1 { font-size: 48px; margin: 0 0 12px; }
+.auth-visual p { max-width: 560px; font-size: 18px; line-height: 1.6; }
+.auth-panel { display: grid; place-items: center; padding: 35px; }
+.auth-card { width: min(470px, 100%); background: white; padding: 34px; border: 1px solid var(--eco-border); border-radius: 20px; box-shadow: var(--eco-shadow); }
+.auth-card .brand { margin-bottom: 24px; }
+.auth-card h2 { color: var(--eco-brown); margin: 0 0 8px; }
+.auth-card__lead { color: var(--eco-muted); margin: 0 0 23px; line-height: 1.5; }
+.auth-form { display: grid; gap: 16px; }
+.auth-form label { display: block; margin-bottom: 7px; color: var(--eco-brown); font-weight: 700; }
+.auth-form input { width: 100%; padding: 12px 13px; border: 1px solid #d7dacb; border-radius: 10px; font: inherit; outline: none; }
+.auth-form input:focus { border-color: var(--eco-green); box-shadow: 0 0 0 3px rgba(76,175,80,.13); }
+.auth-form .btn-eco { width: 100%; margin-top: 4px; }
+.auth-form__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.auth-form__full { grid-column: 1 / -1; }
+.auth-links { margin-top: 19px; display: flex; justify-content: space-between; gap: 15px; font-size: 14px; }
+.auth-links a { color: var(--eco-green); font-weight: 700; }
+.otp-input { text-align: center; letter-spacing: .45em; font-size: 23px !important; font-weight: 800; }
+@media (max-width: 850px) { .auth-page { grid-template-columns: 1fr; } .auth-visual { min-height: 240px; padding: 30px; } .auth-visual h1 { font-size: 36px; } }
+@media (max-width: 540px) { .auth-panel { padding: 20px 16px; } .auth-card { padding: 25px 20px; } .auth-form__grid { grid-template-columns: 1fr; } .auth-form__full { grid-column: auto; } }

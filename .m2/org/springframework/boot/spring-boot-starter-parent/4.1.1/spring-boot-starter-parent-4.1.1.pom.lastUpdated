@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Thu Sep 10 10:24:55 GMT+07:00 2026
+@default-central-https\://repo.maven.apache.org/maven2/.lastUpdated=1789010695664
+https\://repo.maven.apache.org/maven2/.error=Could not transfer artifact org.springframework.boot\:spring-boot-starter-parent\:pom\:4.1.1 from/to central (https\://repo.maven.apache.org/maven2)\: Permission denied\: getsockopt

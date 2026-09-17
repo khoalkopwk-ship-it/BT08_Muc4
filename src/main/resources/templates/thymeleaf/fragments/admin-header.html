@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<header class="admin-topbar" th:fragment="header">
+    <div class="admin-topbar__title">
+        <strong>Hệ thống quản trị EcoMart</strong>
+        <small>Spring Boot - Thymeleaf</small>
+    </div>
+
+    <div class="admin-student">
+        <img class="admin-student__avatar"
+             th:src="@{/images/student/avarta.jpg}"
+             src="/images/student/avarta.jpg"
+             alt="Ảnh sinh viên thực hiện">
+
+        <div class="admin-student__info">
+            <!-- Hiển thị tên người dùng hiện tại, hoặc nội dung mặc định nếu chưa đăng nhập. -->
+            <strong th:text="${currentUser != null
+                    ? currentUser.fullname
+                    : 'Sinh viên thực hiện'}">
+                Sinh viên thực hiện
+            </strong>
+            <small>HCMUTE</small>
+        </div>
+    </div>
+</header>
+
+</body>
+</html>
